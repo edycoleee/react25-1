@@ -2,6 +2,24 @@
 
 const App = () => {
 
+  let tbSiswa = [
+    {
+      id: 1,
+      siswaName: 'Budi',
+      siswaAlamat: 'Jakarta',
+    },
+    {
+      id: 2,
+      siswaName: 'Andi',
+      siswaAlamat: 'Bandung',
+    },
+    {
+      id: 3,
+      siswaName: 'Cindy',
+      siswaAlamat: 'Surabaya',
+    },
+  ];
+
   return (
     <div>
       <fieldset>

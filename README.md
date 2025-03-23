@@ -24,11 +24,17 @@ git remote add origin https://github.com/edycoleee/react25-1.git
 
 ```
 
+![Alt text](picture/main.jpg)
+
 ## 2. MEMBUAT PAGE SISWA
 
 GITHUB
 
 ```
 git branch 01_mockpage
+git checkout 01_mockpage
+```
+
+```
 
 ```
