@@ -8,7 +8,9 @@ function EditSiswa({ tbSiswa, deleteSiswa, setEditSiswa }) {
       {tbSiswa.map((siswa) => (
         <div key={siswa.id}>
           <p>
-            {siswa.id} . {siswa.siswaName} - {siswa.siswaAlamat} {"  "}
+            <span data-testid="siswa-id">{siswa.id}</span> .
+            <span data-testid="siswa-name">{siswa.siswaName}</span> -
+            <span data-testid="siswa-alamat">{siswa.siswaAlamat}</span> {"  "}
             <button onClick={() => setEditSiswa(siswa)}>Edit</button>{"  "}
             <button onClick={() => deleteSiswa(siswa.id)}>Delete</button>
           </p>

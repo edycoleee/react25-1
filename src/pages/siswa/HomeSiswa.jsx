@@ -4,17 +4,9 @@ import AddSiswa from './AddSiswa';
 import EditSiswa from './EditSiswa';
 import { nanoid } from 'nanoid';
 
-const tbSiswaAwal = [
-  {
-    id: 1,
-    siswaName: 'Budi',
-    siswaAlamat: 'Jakarta',
-  }
-];
-
 function HomeSiswa() {
 
-  const [tbSiswa, setTbSiswa] = useState(tbSiswaAwal);
+  const [tbSiswa, setTbSiswa] = useState([]);
   const [editSiswa, setEditSiswa] = useState(null);
 
   const addSiswa = (siswa) => {
