@@ -440,9 +440,9 @@ nama, alamat, tgllahir (date), kelas
 ## 6. MELANJUTKAN LATIHAN 2
 
 Buat baru untuk data pasien :
-nama,alamat,goldarah pilihan (A,B,AB,O)
+nama,alamat,goldarah pilihan dropdown (A,B,AB,O)
 
 ## 7. MELANJUTKAN LATIHAN 3
 
 Buat baru untuk data buku :
-judul,penerbit,rangkuman >> Text panjang
+judul, penerbit, summary >> Text area, status >>checkbox (aktif / tidak aktif)
