@@ -1,26 +1,35 @@
-import React from 'react'
+//src/pages/siswa/HomeSiswa.jsx
+import React, { useState } from 'react';
 import AddSiswa from './AddSiswa';
 import EditSiswa from './EditSiswa';
+import { nanoid } from 'nanoid';
 
-let tbSiswa = [
+const tbSiswaAwal = [
   {
     id: 1,
     siswaName: 'Budi',
     siswaAlamat: 'Jakarta',
-  },
-  {
-    id: 2,
-    siswaName: 'Andi',
-    siswaAlamat: 'Bandung',
-  },
-  {
-    id: 3,
-    siswaName: 'Cindy',
-    siswaAlamat: 'Surabaya',
-  },
+  }
 ];
 
 function HomeSiswa() {
+
+  const [tbSiswa, setTbSiswa] = useState(tbSiswaAwal);
+  const [editSiswa, setEditSiswa] = useState(null);
+
+  const addSiswa = (siswa) => {
+    siswa.id = nanoid();
+    setTbSiswa([...tbSiswa, siswa]);
+  };
+
+  const deleteSiswa = (id) => {
+    setTbSiswa(tbSiswa.filter((siswa) => siswa.id !== id));
+  };
+
+  const updateSiswa = (updatedSiswa) => {
+    setTbSiswa(tbSiswa.map((siswa) => (siswa.id === updatedSiswa.id ? updatedSiswa : siswa)));
+  };
+
   return (
     <div>
       <fieldset>
@@ -34,14 +43,14 @@ function HomeSiswa() {
           FORM - AddSiswa
         </legend>
         <h3>Add Siswa</h3>
-        <AddSiswa />
+        <AddSiswa addSiswa={addSiswa} editSiswa={editSiswa} updateSiswa={updateSiswa} setEditSiswa={setEditSiswa} />
       </fieldset><br />
       <fieldset>
         <legend>
           DATA - EditSiswa,Delete
         </legend>
         <h3>Data Siswa</h3>
-        <EditSiswa tbSiswa={tbSiswa} />
+        <EditSiswa tbSiswa={tbSiswa} deleteSiswa={deleteSiswa} setEditSiswa={setEditSiswa} />
       </fieldset>
     </div>
   )

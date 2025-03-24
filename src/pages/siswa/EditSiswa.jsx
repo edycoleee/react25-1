@@ -1,14 +1,7 @@
+//src/pages/siswa/EditSiswa.jsx
 import React from 'react'
 
-function EditSiswa({ tbSiswa }) {
-
-  const deleteSiswa = (id) => {
-    console.log("DELETE ID : ", id);
-  };
-  const setEditSiswa = (siswa) => {
-    console.log("EDIT SISWA :", siswa);
-  }
-
+function EditSiswa({ tbSiswa, deleteSiswa, setEditSiswa }) {
 
   return (
     <div>

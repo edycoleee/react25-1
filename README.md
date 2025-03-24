@@ -40,16 +40,19 @@ b. membuat mockup fungsi dan log
 c. membuat fungsi add >> simpanAdd, edit >> simpanEdit
 d. map data siswa untuk menampilkan semua data >> ingat perintah MAP
 
-```
-      {tbSiswa.map((siswa) => (
-        <div key={siswa.id}>
-          <p>
-            {siswa.id} . {siswa.siswaName} - {siswa.siswaAlamat} {"  "}
-            <button >Edit</button>{"  "}
-            <button >Delete</button>
-          </p>
-        </div>
-      ))}
+```js
+{
+  tbSiswa.map((siswa) => (
+    <div key={siswa.id}>
+      <p>
+        {siswa.id} . {siswa.siswaName} - {siswa.siswaAlamat} {"  "}
+        <button>Edit</button>
+        {"  "}
+        <button>Delete</button>
+      </p>
+    </div>
+  ));
+}
 ```
 
 ![Alt text](picture/02_mock.jpg)
@@ -61,4 +64,258 @@ GITHUB
 ```
 git branch 02_crudarray
 git checkout 02_crudarray
+```
+
+### PENGETAHUAN TENTANG OPERASI ARRAY OBJECT
+
+Operasi : Metode yang digunakan
+
+#### 1. CREATE (Menambahkan Data Baru)
+
+Create : `.push()`, .concat()
+
+```js
+let newSiswa = {
+  id: 4,
+  siswaName: "Dewi",
+  siswaAlamat: "Yogyakarta",
+};
+tbSiswa.push(newSiswa); // Menambahkan objek ke array
+console.log(tbSiswa);
+```
+
+Spread Operator >> quickly copy all or part of an existing array or object into another array or object
+
+```js
+const numbersOne = [1, 2, 3];
+const numbersCombined = [...numbersOne, 4, 5];
+```
+
+#### 2. READ (Membaca Data)
+
+Read : .map(), .forEach(), `.find()`
+
+```js
+const findSiswa = tbSiswa.find((siswa) => siswa.id === 2);
+console.log(findSiswa);
+```
+
+#### 3. UPDATE (Memperbarui Data)
+
+Update : `.map()`, .findIndex()
+
+```js
+tbSiswa = tbSiswa.map((siswa) =>
+  siswa.id === 2 ? { ...siswa, siswaAlamat: "Semarang" } : siswa
+);
+console.log(tbSiswa);
+```
+
+#### 4. DELETE (Menghapus Data)
+
+Delete : `.filter()`, .splice()
+
+```js
+tbSiswa = tbSiswa.filter((siswa) => siswa.id !== 3);
+console.log(tbSiswa);
+```
+
+### Memindahkan semua fungsi ke HomeSiswa.jsx
+
+#### 1. READ (Membaca Data)
+
+```js
+<EditSiswa tbSiswa={tbSiswa} />
+```
+
+#### 2. CREATE (Menambahkan Data Baru)
+
+```js
+//src/pages/siswa/HomeSiswa.jsx
+.....
+  const [tbSiswa, setTbSiswa] = useState(tbSiswaAwal);
+
+  const addSiswa = (siswa) => {
+    siswa.id = nanoid();
+    setTbSiswa([...tbSiswa, siswa]);
+  };
+
+......
+
+<AddSiswa addSiswa={addSiswa} />
+
+```
+
+```js
+//src/pages/siswa/AddSiswa.jsx
+import React, { useState } from 'react';
+
+function AddSiswa({ addSiswa }) {
+
+  const [siswaName, setSiswaName] = useState('');
+  const [siswaAlamat, setSiswaAlamat] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const siswa = { siswaName, siswaAlamat };
+    addSiswa(siswa);
+
+    setSiswaName('');
+    setSiswaAlamat('');
+  };
+
+
+```
+
+#### 3. DELETE (Menghapus Data)
+
+```js
+//src/pages/siswa/HomeSiswa.jsx
+....
+  const deleteSiswa = (id) => {
+    setTbSiswa(tbSiswa.filter((siswa) => siswa.id !== id));
+  };
+
+```
+
+```js
+//src/pages/siswa/EditSiswa.jsx
+import React from "react";
+
+function EditSiswa({ tbSiswa, deleteSiswa }) {
+  const setEditSiswa = (siswa) => {
+    console.log("EDIT SISWA :", siswa);
+  };
+
+  return (
+    <div>
+      {tbSiswa.map((siswa) => (
+        <div key={siswa.id}>
+          <p>
+            {siswa.id} . {siswa.siswaName} - {siswa.siswaAlamat} {"  "}
+            <button onClick={() => setEditSiswa(siswa)}>Edit</button>
+            {"  "}
+            <button onClick={() => deleteSiswa(siswa.id)}>Delete</button>
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default EditSiswa;
+```
+
+#### 4. UPDATE (Memperbarui Data)
+
+![Alt text](picture/03_update.jpg)
+
+- membuat state update >> membedakan simpan tambah atau simpan update
+
+```js
+//tombol edit >> state setEditSiswa(siswa)
+//src/pages/siswa/EditSiswa.jsx
+import React from "react";
+
+function EditSiswa({ tbSiswa, deleteSiswa, setEditSiswa }) {
+  return (
+    <div>
+      {tbSiswa.map((siswa) => (
+        <div key={siswa.id}>
+          <p>
+            {siswa.id} . {siswa.siswaName} - {siswa.siswaAlamat} {"  "}
+            <button onClick={() => setEditSiswa(siswa)}>Edit</button>
+            {"  "}
+            <button onClick={() => deleteSiswa(siswa.id)}>Delete</button>
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default EditSiswa;
+```
+
+```js
+//src/pages/siswa/AddSiswa.jsx
+import React, { useEffect, useState } from "react";
+
+function AddSiswa({ addSiswa, editSiswa, updateSiswa, setEditSiswa }) {
+  const [siswaName, setSiswaName] = useState("");
+  const [siswaAlamat, setSiswaAlamat] = useState("");
+
+  //setiap ada perubahan state editSiswa >> use effect akan auto update
+  useEffect(() => {
+    if (editSiswa) {
+      // mengisi state name alamat dengan data dari editsiswa
+      setSiswaName(editSiswa.siswaName);
+      setSiswaAlamat(editSiswa.siswaAlamat);
+    } else {
+      setSiswaName("");
+      setSiswaAlamat("");
+    }
+  }, [editSiswa]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const siswa = { siswaName, siswaAlamat };
+    // jika edit siswa tidak null >> edit siswa
+    if (editSiswa) {
+      // ambil id dari editSiswa >> masukkan ke state siswa
+      // variabel siswa >> siswaName, siswaAlamat ,id >> kirim ke fungsi update >> kembalikan state edit ke semula = null
+      siswa.id = editSiswa.id;
+      updateSiswa(siswa);
+      setEditSiswa(null);
+    } else {
+      addSiswa(siswa);
+    }
+    setSiswaName("");
+    setSiswaAlamat("");
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Nama Siswa:
+          <input
+            type="text"
+            placeholder="Nama Siswa"
+            value={siswaName}
+            onChange={(e) => setSiswaName(e.target.value)}
+            required
+          />
+        </label>
+        <p />
+        <label>
+          Alamat Siswa:
+          <input
+            type="text"
+            placeholder="Alamat Siswa"
+            value={siswaAlamat}
+            onChange={(e) => setSiswaAlamat(e.target.value)}
+            required
+          />
+        </label>
+        <p />
+        <button type="submit">{editSiswa ? "Update" : "Tambah"}</button>
+      </form>
+    </div>
+  );
+}
+
+export default AddSiswa;
+```
+
+- membuat fungsi simpan edit
+
+```js
+const updateSiswa = (updatedSiswa) => {
+  setTbSiswa(
+    tbSiswa.map((siswa) =>
+      siswa.id === updatedSiswa.id ? updatedSiswa : siswa
+    )
+  );
+};
 ```
