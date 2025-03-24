@@ -52,6 +52,8 @@ d. map data siswa untuk menampilkan semua data >> ingat perintah MAP
       ))}
 ```
 
+![Alt text](picture/02_mock.jpg)
+
 ## 3. MEMBUAT CRUD SISWA
 
 GITHUB
