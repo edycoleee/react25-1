@@ -431,3 +431,18 @@ test.describe("CRUD Siswa", () => {
 npm run dev
 npx playwright test
 ```
+
+## 5. MELANJUTKAN LATIHAN 1
+
+Buat baru untuk data siswa :
+nama, alamat, tgllahir (date), kelas
+
+## 6. MELANJUTKAN LATIHAN 2
+
+Buat baru untuk data pasien :
+nama,alamat,goldarah pilihan (A,B,AB,O)
+
+## 7. MELANJUTKAN LATIHAN 3
+
+Buat baru untuk data buku :
+judul,penerbit,rangkuman >> Text panjang
